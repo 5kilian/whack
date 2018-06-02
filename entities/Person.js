@@ -5,5 +5,6 @@ module.exports = class Person {
         this.surname = '';
         this.city = '';
         this.username = '';
+        this.photo = '';
     }
 };
