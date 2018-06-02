@@ -1,5 +1,6 @@
 const { google } = require('googleapis');
 const fs = require('fs');
+const readline = require('readline');
 
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/presentations'];
