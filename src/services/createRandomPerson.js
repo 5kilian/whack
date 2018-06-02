@@ -1,6 +1,6 @@
 
 const request = require('request');
-const Person = require('./entities/Person');
+const Person = require('../entities/Person');
 
 module.exports = {
     get: function () {

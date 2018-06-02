@@ -1,4 +1,4 @@
-const authorize = require('../auth/google/authorize')
+const authorize = require('../auth/google/authorize');
 const { google } = require('googleapis');
 const fs = require('fs');
 const readline = require('readline');
@@ -21,7 +21,7 @@ function init(slides) {
     //REMOVE ME, test data for slides
     slideData = slides ? slides : [{title: "Titel", content: {text: "Body Text"}, author: "Autor", layout: "BLANK"}];
 
-    fs.readFile('client_secret.json', (err, content) => {
+    fs.readFile('src/auth/google/client_secret.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Slides API.
         authorize(JSON.parse(content), buildSlides);
