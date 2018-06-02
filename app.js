@@ -1,6 +1,7 @@
 var express = require('express')
 var reddit = require('./reddit')
 var slides = require('./slides')
+var randomperson = require('./randomperson')
 var app = express()
 const https = require('https')
 
@@ -15,6 +16,10 @@ app.get('/reddit/', function (req, res) {
 
 app.get('/slides/', function (req, res) {
     res.send(slides.createSlides())
+})
+
+app.get('/person/', function (req, res) {
+    res.send(randomperson.get())
 })
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
