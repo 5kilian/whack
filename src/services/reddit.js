@@ -8,7 +8,7 @@ const fs = require('fs');
 const Slide = require('../entities/slide');
 
 const reddit = 'https://www.reddit.com';
-const reddit_oauth = 'https://oauth.reddit.com';
+// const reddit_oauth = 'https://oauth.reddit.com';
 
 module.exports = class Reddit {
     get () {
@@ -40,6 +40,9 @@ module.exports = class Reddit {
                 resolve(Promise.all(JSON.parse(body).data.children.map(child => this.createSlide(child.data))));
             });
         });
+    }
+    random () {
+        return this.subreddit('random');
     }
     autocomplete (query) {
         return new Promise((resolve, reject) => {
