@@ -1,7 +1,7 @@
 const express = require('express');
 
 const Reddit = require('./src/services/reddit');
-const slides = require('./src/services/googleSlides');
+const slidesService = require('./src/services/googleSlides');
 const createRandomPerson = require('./src/services/createRandomPerson');
 const Person = require('./src/entities/Person');
 const Slide = require('./src/entities/slide');
@@ -38,7 +38,7 @@ app.get('/reddit/autocomplete', function (req, res) {
 });
 
 app.get('/slides/', function (req, res) {
-    res.send(slides.newPresentation())
+    res.send(slidesService.newPresentation())
 });
 
 app.get('/person/', function (req, res) {
