@@ -14,7 +14,7 @@ app.get('/reddit/', function (req, res) {
 })
 
 app.get('/slides/', function (req, res) {
-    res.send(slides.createSlides())
+    res.send(slides.newPresentation())
 })
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
