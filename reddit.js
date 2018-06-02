@@ -31,14 +31,18 @@ module.exports = {
         return new Promise((resolve, reject) => {
             request(reddit + '/r/' + sub, (error, response, html) => {
                 request(reddit + '/r/' + sub + '.json', (error, response, body) => {
-                    resolve(JSON.parse(body).data.children.map(child => this.createTitleSlide(html)));
-                    resolve(JSON.parse(body).data.children.map(child => this.createSlide(child.data)));
+                    let slides = [this.createTitleSlide(html)];
+                    JSON.parse(body).data.children.forEach(child =>
+                        slides.push(this.createSlide(child.data))
+                    );
+                    resolve(slides);
                 })
             });
         });
     },
     createTitleSlide: function (html) {
         console.log(html);
+        return new Slide();
     },
     createSlide: function (child) {
         let slide = new Slide();
