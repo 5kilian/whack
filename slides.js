@@ -41,13 +41,15 @@ function buildSlides(auth) {
     });
 
     //build the slides
+    let request = slideBuilder.build(input);
+
     var requests = [{
         createSlide: {
             slideLayoutReference: {
                 predefinedLayout: 'TITLE_AND_TWO_COLUMNS'
             }
         }
-    }];
+    },];
 
     function generateSlides(presentationId) {
         slides.presentations.batchUpdate({
