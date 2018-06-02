@@ -18,6 +18,7 @@ module.exports = {
                 randomPerson.surname    = JSON.parse(body).results[0].name.last;
                 randomPerson.city       = JSON.parse(body).results[0].location.city;
                 randomPerson.username   = JSON.parse(body).results[0].login.username;
+                randomPerson.photo      = JSON.parse(body).results[0].login.picture.large;
             }
         );
           

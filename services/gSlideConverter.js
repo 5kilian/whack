@@ -10,11 +10,12 @@ module.exports = {
 
             //add page
             request = request.concat(
-                [{
+                [
+                    {
                         createSlide: {
                             objectId: PAGE_ID,
                             slideLayoutReference: {
-                                predefinedLayout: slide.layout
+                                predefinedLayout: 'BLANK'
                             }
                         }
                     },
@@ -27,19 +28,19 @@ module.exports = {
                                 "pageObjectId": PAGE_ID,
                                 "size": {
                                     "width": {
-                                        "magnitude": 150,
+                                        "magnitude": 1500,
                                         "unit": "PT"
                                     },
                                     "height": {
-                                        "magnitude": 50,
+                                        "magnitude": 500,
                                         "unit": "PT"
                                     }
                                 },
                                 "transform": {
                                     "scaleX": 1,
                                     "scaleY": 1,
-                                    "translateX": 200,
-                                    "translateY": 100,
+                                    "translateX": 320,
+                                    "translateY": 200,
                                     "unit": "PT"
                                 }
                             }
@@ -52,7 +53,7 @@ module.exports = {
                             "insertionIndex": 0
                         }
                     },
-                    //add author
+                    //add content
                     {
                         "createShape": {
                             "objectId": CONTENT0_ID,
@@ -84,6 +85,32 @@ module.exports = {
                             "objectId": CONTENT0_ID,
                             "text": slide.content.text,
                             "insertionIndex": 0
+                        }
+                    },
+                    //add Image
+                    {
+                        "createImage": {
+                            "url": 'https://i.redd.it/kw5tz09mem111.gif',
+                            "elementProperties": {
+                                "pageObjectId": PAGE_ID,
+                                "size": {
+                                    "width": {
+                                        "magnitude": 30,
+                                        "unit": "PT"
+                                    },
+                                    "height": {
+                                        "magnitude": 30,
+                                        "unit": "PT"
+                                    }
+                                },
+                                "transform": {
+                                    "scaleX": 1,
+                                    "scaleY": 1,
+                                    "translateX": 200,
+                                    "translateY": 100,
+                                    "unit": "PT"
+                                }
+                            }
                         }
                     }
                 ]);
