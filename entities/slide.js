@@ -10,5 +10,6 @@ module.exports = class Slide {
         this.author = {
             name: ''
         };
+        this.layout = '';
     }
 };

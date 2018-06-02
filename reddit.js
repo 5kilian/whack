@@ -27,29 +27,36 @@ module.exports = {
             }
         ));
     },
-    subreddit: function (sub) {
+    subreddit: async function (sub) {
         return new Promise((resolve, reject) => {
-            request(reddit + '/r/' + sub, (error, response, html) => {
-                request(reddit + '/r/' + sub + '.json', (error, response, body) => {
-                    let slides = [this.createTitleSlide(html)];
-                    JSON.parse(body).data.children.forEach(child =>
-                        slides.push(this.createSlide(child.data))
-                    );
-                    resolve(slides);
-                })
+            request(reddit + '/r/' + sub + '.json', (error, response, body) => {
+                resolve(Promise.all(JSON.parse(body).data.children.map(child => this.createSlide(child.data))));
             });
         });
     },
     createTitleSlide: function (html) {
-        console.log(html);
-        return new Slide();
+        let slide = new Slide();
+        slide.layout = 'TITLE';
+        return slide;
     },
     createSlide: function (child) {
-        let slide = new Slide();
-        slide.title = child.title;
-        slide.content.text = child.author_flair_text;
-        slide.content.img = child.url;
-        slide.author.name = child.author;
-        return slide;
+        return new Promise((resolve, reject) =>
+            request(reddit + '/r/' + child.subreddit + '/comments/' + child.id + '.json', (error, response, body) => {
+                let slide = new Slide();
+                slide.title = child.title;
+                slide.content.text = JSON.parse(body)[0].data.children[0].data.selftext;
+                slide.content.comments = JSON.parse(body)[1].data.children.map(comment => comment.data.body);
+                slide.content.img = child.url;
+
+                if (slide.content.text && slide.content.img) {
+                    slide.layout = 'TITLE_AND_TWO_COLUMNS';
+                } else {
+                    slide.layout = 'TITLE_AND_BODY';
+                }
+
+                slide.author.name = child.author;
+                resolve(slide);
+            })
+        );
     }
 };
