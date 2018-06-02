@@ -1,21 +1,35 @@
-var express = require('express')
-var reddit = require('./reddit')
-var slides = require('./slides')
-var randomperson = require('./randomperson')
-var app = express()
-const https = require('https')
+const express = require('express');
+
+const home = require('./home');
+const reddit = require('./reddit');
+const slides = require('./slides');
+const randomperson = require('./randomperson');
+const Slide = require('./entities/slide');
+
+const app = express();
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', function (req, res) {
-  res.send('hello whack!')
-})
+    res.send(home.get());
+
+    let slide = new Slide('hello', 'world');
+    console.log(slide);
+});
 
 app.get('/reddit/', function (req, res) {
-    res.send(reddit.get())
-})
+    res.send(reddit.get());
+});
+
+app.get('/reddit/auth', function (req, res) {
+    res.send(reddit.auth());
+});
+
+app.get('/reddit/r/:sub' , function (req, res) {
+    res.send(reddit.subreddit(req.params.sub));
+});
 
 app.get('/slides/', function (req, res) {
-    res.send(slides.createSlides())
+    res.send(slides.newPresentation())
 })
 
 app.get('/person/', function (req, res) {
