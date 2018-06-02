@@ -3,7 +3,8 @@ const express = require('express');
 const home = require('./home');
 const reddit = require('./reddit');
 const slides = require('./slides');
-const randomperson = require('./randomperson');
+const createRandomPerson = require('./createRandomPerson');
+const Person = require('./entities/Person');
 const Slide = require('./entities/slide');
 
 const app = express();
