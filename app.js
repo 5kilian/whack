@@ -2,7 +2,7 @@ const express = require('express');
 
 const home = require('./home');
 const reddit = require('./reddit');
-const slides = require('./slides');
+const slides = require('./services/googleSlides');
 const createRandomPerson = require('./createRandomPerson');
 const Person = require('./entities/Person');
 const Slide = require('./entities/slide');

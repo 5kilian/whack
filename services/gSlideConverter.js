@@ -52,7 +52,7 @@ module.exports = {
                             "insertionIndex": 0
                         }
                     },
-                    //add author
+                    //add content
                     {
                         "createShape": {
                             "objectId": CONTENT0_ID,
@@ -84,6 +84,32 @@ module.exports = {
                             "objectId": CONTENT0_ID,
                             "text": slide.content.text,
                             "insertionIndex": 0
+                        }
+                    },
+                    //add Image
+                    {
+                        "createImage": {
+                            "url": 'https://i.redd.it/kw5tz09mem111.gif',
+                            "elementProperties": {
+                                "pageObjectId": PAGE_ID,
+                                "size": {
+                                    "width": {
+                                        "magnitude": 30,
+                                        "unit": "PT"
+                                    },
+                                    "height": {
+                                        "magnitude": 30,
+                                        "unit": "PT"
+                                    }
+                                },
+                                "transform": {
+                                    "scaleX": 1,
+                                    "scaleY": 1,
+                                    "translateX": 200,
+                                    "translateY": 100,
+                                    "unit": "PT"
+                                }
+                            }
                         }
                     }
                 ]);

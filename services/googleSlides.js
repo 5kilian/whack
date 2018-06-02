@@ -1,21 +1,26 @@
-const authorize = require('./auth/google/authorize')
+const authorize = require('../auth/google/authorize')
 const { google } = require('googleapis');
 const fs = require('fs');
 const readline = require('readline');
 const slideConverter = require('./gSlideConverter');
 
+let slideData = [];
+
 /**
  * Google Slides subpart
  */
 module.exports = {
-    newPresentation: function () {
-        init();
+    newPresentation: function (slides) {
+        init(slides);
         return "Slides created.";
     },
 };
 
 // Load client secrets from a local file.
-function init() {
+function init(slides) {
+    //REMOVE ME, test data for slides
+    slideData = slides ? slides : [{title: "Titel", content: {text: "Body Text"}, author: "Autor", layout: "BLANK"}];
+
     fs.readFile('client_secret.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Slides API.
@@ -24,7 +29,7 @@ function init() {
 }
 
 function buildSlides(auth) {
-
+    
     const slides = google.slides({
         version: 'v1',
         auth
@@ -42,10 +47,8 @@ function buildSlides(auth) {
     });
 
     //build the slides
-
-    let testSlides = [{title: "Titel", content: {text: "Body Text"}, author: "Autor", layout: "BLANK"}];
     
-    let request = slideConverter.build(testSlides);
+    let request = slideConverter.build(slideData);
     console.log(request);
 
     function generateSlides(presentationId) {
