@@ -3,7 +3,8 @@ const express = require('express');
 const home = require('./home');
 const reddit = require('./reddit');
 const slides = require('./slides');
-const randomperson = require('./randomperson');
+const createRandomPerson = require('./createRandomPerson');
+const Person = require('./entities/Person');
 const Slide = require('./entities/slide');
 
 const app = express();
@@ -35,7 +36,7 @@ app.get('/slides/', function (req, res) {
 });
 
 app.get('/person/', function (req, res) {
-    res.send(randomperson.get())
-})
+    res.send(createRandomPerson.get())
+});
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
