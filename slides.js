@@ -1,7 +1,8 @@
+const authorize = require('./auth/google/authorize')
+const { google } = require('googleapis');
 const fs = require('fs');
 const readline = require('readline');
-const { google } = require('googleapis');
-const authorize = require('./auth/google/authorize')
+const slideConverter = require('./gSlideConverter');
 
 /**
  * Google Slides subpart
@@ -41,25 +42,21 @@ function buildSlides(auth) {
     });
 
     //build the slides
-    let request = slideBuilder.build(input);
 
-    var requests = [{
-        createSlide: {
-            slideLayoutReference: {
-                predefinedLayout: 'TITLE_AND_TWO_COLUMNS'
-            }
-        }
-    },];
+    let testSlides = [{title: "Titel", content: {text: "Body Text"}, author: "Autor", layout: "BLANK"}];
+    
+    let request = slideConverter.build(testSlides);
+    console.log(request);
 
     function generateSlides(presentationId) {
         slides.presentations.batchUpdate({
             presentationId: presentationId,
             resource: {
-                requests: requests
+                requests: request
             }
         }, function (err, createSlideResponse) {
             if (err) {
-                console.log(err);
+                //console.log(err);
             }
             console.log(createSlideResponse);
             console.log(`Created slide with ID: ${createSlideResponse.data.replies[0].createSlide.objectId}`);
