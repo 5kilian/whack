@@ -35,7 +35,7 @@ app.get('/slides/', function (req, res) {
 });
 
 app.get('/person/', function (req, res) {
-    res.send(randomperson.get())
+    res.send(createRandomPerson.get())
 })
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
