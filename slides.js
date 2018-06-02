@@ -23,7 +23,6 @@ function init() {
 }
 
 function buildSlides(auth) {
-    let presentationId;
 
     const slides = google.slides({
         version: 'v1',
@@ -37,23 +36,20 @@ function buildSlides(auth) {
         if (err) {
             console.log(err);
         }
-        presentationId = presentation.data.presentationId;
-        console.log(presentation);
-        console.log(`https://docs.google.com/presentation/d/${presentationId}`);
+        console.log(`https://docs.google.com/presentation/d/${presentation.data.presentationId}`);
+        generateSlides(presentation.data.presentationId);
     });
 
     //build the slides
     var requests = [{
         createSlide: {
-            objectId: 1,
-            insertionIndex: '1',
             slideLayoutReference: {
                 predefinedLayout: 'TITLE_AND_TWO_COLUMNS'
             }
         }
     }];
 
-    function generateSlides() {
+    function generateSlides(presentationId) {
         slides.presentations.batchUpdate({
             presentationId: presentationId,
             resource: {
@@ -63,7 +59,8 @@ function buildSlides(auth) {
             if (err) {
                 console.log(err);
             }
-            console.log(`Created slide with ID: ${createSlideResponse.replies[0].createSlide.objectId}`);
+            console.log(createSlideResponse);
+            console.log(`Created slide with ID: ${createSlideResponse.data.replies[0].createSlide.objectId}`);
         });
     }
 }
