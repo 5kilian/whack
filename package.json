@@ -1,16 +1,26 @@
 {
-  "name": "whack",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4"
-  },
+  "name": "whackaoke",
+  "version": "0.0.1",
+  "description": "present dat shit bro",
+  "main": "app.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5kilian/whack.git"
+  },
+  "keywords": [
+    "whack",
+    "af"
+  ],
+  "author": "me",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/5kilian/whack/issues"
+  },
+  "homepage": "https://github.com/5kilian/whack#readme",
+  "dependencies": {
+    "express": "^4.16.3"
   }
 }
