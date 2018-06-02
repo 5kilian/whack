@@ -28,11 +28,11 @@ module.exports = {
                                 "pageObjectId": PAGE_ID,
                                 "size": {
                                     "width": {
-                                        "magnitude": 1500,
+                                        "magnitude": 150,
                                         "unit": "PT"
                                     },
                                     "height": {
-                                        "magnitude": 500,
+                                        "magnitude": 50,
                                         "unit": "PT"
                                     }
                                 },
