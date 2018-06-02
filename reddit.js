@@ -27,6 +27,13 @@ module.exports = {
             }
         ));
     },
+    top: async function (sub) {
+        return new Promise((resolve, reject) => {
+            request(reddit + '/r/' + sub + '/top.json', (error, response, body) => {
+                resolve(Promise.all(JSON.parse(body).data.children.map(child => this.createSlide(child.data))));
+            });
+        });
+    },
     subreddit: async function (sub) {
         return new Promise((resolve, reject) => {
             request(reddit + '/r/' + sub + '.json', (error, response, body) => {
@@ -46,7 +53,10 @@ module.exports = {
                 slide.title = child.title;
                 slide.content.text = JSON.parse(body)[0].data.children[0].data.selftext;
                 slide.content.comments = JSON.parse(body)[1].data.children.map(comment => comment.data.body);
-                slide.content.img = child.url;
+                slide.content.img = /(.*[.](jpg|jpeg|png|gif)$)/.exec(child.url);
+                if (slide.content.img) {
+                    slide.content.img = slide.content.img[0];
+                }
 
                 if (slide.content.text && slide.content.img) {
                     slide.layout = 'TITLE_AND_TWO_COLUMNS';
