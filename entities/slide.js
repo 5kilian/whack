@@ -1,8 +1,12 @@
 
 module.exports = class Slide {
-    constructor (title, content) {
-        this.title = title;
-        this.content = content;
+
+    constructor () {
+        this.title = '';
+        this.content = {
+            img: '',
+            text: ''
+        };
         this.author = {
             name: ''
         };
