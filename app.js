@@ -4,11 +4,16 @@ const home = require('./home');
 const reddit = require('./reddit');
 const slides = require('./slides');
 
+const Slide = require('./entities/slide');
+
 const app = express();
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', function (req, res) {
     res.send(home.get());
+
+    let slide = new Slide('hello', 'world');
+    console.log(slide);
 });
 
 app.get('/reddit/', function (req, res) {
