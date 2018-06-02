@@ -9,6 +9,11 @@ module.exports = class Slide {
         this.author = {
             name: ''
         };
+        /**
+         * TITLE
+         * TITLE_AND_BODY
+         * TITLE_AND_TWO_COLUMNS
+         */
         this.layout = '';
     }
 };
