@@ -88,10 +88,8 @@ function getNewToken(oAuth2Client, callback) {
  */
 
 function listSlides(auth) {
-    const slides = google.slides({
-        version: 'v1',
-        auth
-    });
+    const slides = google.slides({ version: 'v1', auth });
+
     slides.presentations.create({
         title: "" + Date.now()
     }, (err, presentation) => {
