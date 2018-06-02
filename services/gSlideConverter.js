@@ -10,11 +10,12 @@ module.exports = {
 
             //add page
             request = request.concat(
-                [{
+                [
+                    {
                         createSlide: {
                             objectId: PAGE_ID,
                             slideLayoutReference: {
-                                predefinedLayout: slide.layout
+                                predefinedLayout: 'BLANK'
                             }
                         }
                     },
@@ -27,19 +28,19 @@ module.exports = {
                                 "pageObjectId": PAGE_ID,
                                 "size": {
                                     "width": {
-                                        "magnitude": 150,
+                                        "magnitude": 1500,
                                         "unit": "PT"
                                     },
                                     "height": {
-                                        "magnitude": 50,
+                                        "magnitude": 500,
                                         "unit": "PT"
                                     }
                                 },
                                 "transform": {
                                     "scaleX": 1,
                                     "scaleY": 1,
-                                    "translateX": 200,
-                                    "translateY": 100,
+                                    "translateX": 320,
+                                    "translateY": 200,
                                     "unit": "PT"
                                 }
                             }

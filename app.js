@@ -2,7 +2,7 @@ const express = require('express');
 
 const home = require('./home');
 const reddit = require('./reddit');
-const slides = require('./services/googleSlides');
+const slidesService = require('./services/googleSlides');
 const createRandomPerson = require('./createRandomPerson');
 const Person = require('./entities/Person');
 const Slide = require('./entities/slide');
@@ -31,8 +31,14 @@ app.get('/reddit/r/:sub' , function (req, res) {
     res.send(reddit.subreddit(req.params.sub).then(slides => console.log(slides)));
 });
 
+app.get('/reddit/random' , function (req, res) {
+    reddit.subreddit('random').then(slides => {
+        res.send(slidesService.newPresentation(slides));
+    });
+});
+
 app.get('/slides/', function (req, res) {
-    res.send(slides.newPresentation())
+    res.send(slidesService.newPresentation())
 });
 
 app.get('/person/', function (req, res) {
