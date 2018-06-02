@@ -4,7 +4,7 @@ const readline = require('readline');
 
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/presentations'];
-const TOKEN_PATH = 'credentials.json';
+const TOKEN_PATH = 'src/auth/google/credentials.json';
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the

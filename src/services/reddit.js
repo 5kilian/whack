@@ -5,16 +5,16 @@
 const request = require('request');
 const fs = require('fs');
 
-const Slide = require('./entities/slide');
+const Slide = require('../entities/slide');
 
 const reddit = 'https://www.reddit.com';
 const reddit_oauth = 'https://oauth.reddit.com';
 
-module.exports = {
-    get: function () {
+module.exports = class Reddit {
+    get () {
         return 'Hello Reddit!';
-    },
-    auth: function () {
+    }
+    auth () {
         return new Promise((resolve, reject) => request.post({
                 url: reddit + '/api/v1/access_token?grant_type=password&username=whackaoke&password=whackathon2k18',
                 headers: {
@@ -26,27 +26,34 @@ module.exports = {
                 resolve(JSON.parse(body));
             }
         ));
-    },
-    top: async function (sub) {
+    }
+    top (sub) {
         return new Promise((resolve, reject) => {
             request(reddit + '/r/' + sub + '/top.json', (error, response, body) => {
                 resolve(Promise.all(JSON.parse(body).data.children.map(child => this.createSlide(child.data))));
             });
         });
-    },
-    subreddit: async function (sub) {
+    }
+    subreddit (sub) {
         return new Promise((resolve, reject) => {
             request(reddit + '/r/' + sub + '.json', (error, response, body) => {
                 resolve(Promise.all(JSON.parse(body).data.children.map(child => this.createSlide(child.data))));
             });
         });
-    },
-    createTitleSlide: function (html) {
+    }
+    autocomplete (query) {
+        return new Promise((resolve, reject) => {
+            request(reddit + '/api/subreddit_autocomplete_v2.json?query=' + query, (error, response, body) => {
+                resolve(JSON.parse(body).data.children.map(child => child.data));
+            });
+        });
+    }
+    createTitleSlide (html) {
         let slide = new Slide();
         slide.layout = 'TITLE';
         return slide;
-    },
-    createSlide: function (child) {
+    }
+    createSlide (child) {
         return new Promise((resolve, reject) =>
             request(reddit + '/r/' + child.subreddit + '/comments/' + child.id + '.json', (error, response, body) => {
                 let slide = new Slide();
