@@ -5,6 +5,8 @@
 const request = require('request');
 const fs = require('fs');
 
+const Slide = require('./entities/slide');
+
 const reddit = 'https://www.reddit.com';
 const reddit_oauth = 'https://oauth.reddit.com';
 
@@ -26,10 +28,24 @@ module.exports = {
         ));
     },
     subreddit: function (sub) {
-        request({
-            'url': reddit + '/r/' + sub + '/.json'
-        }, (error, response, body) => {
-            console.log(body);
+        return new Promise((resolve, reject) => {
+            request(reddit + '/r/' + sub, (error, response, html) => {
+                request(reddit + '/r/' + sub + '.json', (error, response, body) => {
+                    resolve(JSON.parse(body).data.children.map(child => this.createTitleSlide(html)));
+                    resolve(JSON.parse(body).data.children.map(child => this.createSlide(child.data)));
+                })
+            });
         });
     },
+    createTitleSlide: function (html) {
+        console.log(html);
+    },
+    createSlide: function (child) {
+        let slide = new Slide();
+        slide.title = child.title;
+        slide.content.text = child.author_flair_text;
+        slide.content.img = child.url;
+        slide.author.name = child.author;
+        return slide;
+    }
 };

@@ -12,7 +12,9 @@ const app = express();
 app.get('/', function (req, res) {
     res.send(home.get());
 
-    let slide = new Slide('hello', 'world');
+    let slide = new Slide();
+    slide.title = 'Hello';
+    slide.content.text = 'Whack';
     console.log(slide);
 });
 
@@ -25,12 +27,12 @@ app.get('/reddit/auth', function (req, res) {
 });
 
 app.get('/reddit/r/:sub' , function (req, res) {
-    res.send(reddit.subreddit(req.params.sub));
+    res.send(reddit.subreddit(req.params.sub).then(slides => console.log(slides)));
 });
 
 app.get('/slides/', function (req, res) {
     res.send(slides.newPresentation())
-})
+});
 
 app.get('/person/', function (req, res) {
     res.send(randomperson.get())
