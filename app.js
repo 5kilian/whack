@@ -9,15 +9,12 @@ app.get('/', function (req, res) {
   res.send('hello whack!')
 })
 
-
 app.get('/reddit/', function (req, res) {
-    console.log(reddit.get());
     res.send(reddit.get())
 })
 
 app.get('/slides/', function (req, res) {
-    console.log(slides.get());
-    res.send(slides.get())
+    res.send(slides.createSlides())
 })
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
