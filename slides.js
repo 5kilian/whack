@@ -1,10 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
-
-// If modifying these scopes, delete credentials.json.
-const SCOPES = ['https://www.googleapis.com/auth/presentations'];
-const TOKEN_PATH = 'credentials.json';
+const authorize = require('./auth/google/authorize')
 
 /**
  * Google Slides subpart
@@ -26,7 +23,6 @@ function init() {
 }
 
 function buildSlides(auth) {
-
     let presentationId;
 
     const slides = google.slides({
