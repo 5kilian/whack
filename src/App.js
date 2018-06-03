@@ -61,6 +61,7 @@ class App extends React.Component {
                     </div>);
                 })
                 }
+                <div><a href="https://docs.google.com/presentation/d/1eTOVC1HKuFOymot4dsFrQQUhgGbB_HGnvV_7fBiV984">Slides</a></div>
             </div>
         );
     }
