@@ -4,7 +4,7 @@ const Reddit = require('./src/services/reddit');
 const slidesService = require('./src/services/googleSlides');
 const createRandomPerson = require('./src/services/createRandomPerson');
 const Person = require('./src/entities/Person');
-const Slide = require('./src/entities/slide');
+const Slide = require('./src/entities/Slide');
 
 const app = express();
 
@@ -26,8 +26,10 @@ app.get('/reddit/auth', function (req, res) {
 });
 
 app.get('/reddit/r/:sub' , function (req, res) {
-    reddit.subreddit(req.params.sub).then(slides => {
-        res.send(slidesService.newPresentation(slides));
+    reddit.subreddit(req.params.sub).then(presentation => {
+        presentation.slides[21].content.img = '';
+        slidesService.newPresentation(presentation);
+        res.send(presentation);
     });
 });
 

@@ -5,7 +5,8 @@
 const request = require('request');
 const fs = require('fs');
 
-const Slide = require('../entities/slide');
+const Slide = require('../entities/Slide');
+const Presentation = require('../entities/Presentation');
 
 const reddit = 'https://www.reddit.com';
 // const reddit_oauth = 'https://oauth.reddit.com';
@@ -35,9 +36,21 @@ module.exports = class Reddit {
         });
     }
     subreddit (sub) {
+        let presentation = new Presentation();
         return new Promise((resolve, reject) => {
             request(reddit + '/r/' + sub + '.json', (error, response, body) => {
-                resolve(Promise.all(JSON.parse(body).data.children.map(child => this.createSlide(child.data))));
+                request(reddit + '/r/' + JSON.parse(body).data.children[0].data.subreddit + '/about.json', (error, response, suby) => {
+                    new Promise((resolve, reject) => {
+                        resolve(Promise.all(JSON.parse(body).data.children.map(child => {
+                            presentation.slides.push(child.data);
+                            return this.createSlide(child.data)
+                        })));
+                    }).then(slides => {
+                        presentation.subreddit = JSON.parse(suby);
+                        presentation.slides = slides;
+                        resolve(presentation);
+                    });
+                })
             });
         });
     }

@@ -4,22 +4,24 @@ const fs = require('fs');
 const readline = require('readline');
 const slideConverter = require('./gSlideConverter');
 
+let subData = {};
 let slideData = [];
 
 /**
  * Google Slides subpart
  */
 module.exports = {
-    newPresentation: function (slides) {
-        init(slides);
+    newPresentation: function (presentation) {
+        init(presentation);
         return "Slides created.";
     },
 };
 
 // Load client secrets from a local file.
-function init(slides) {
+function init(presentation) {
     //REMOVE ME, test data for slides
-    slideData = slides ? slides : [{title: "Titel", content: {text: "Body Text"}, author: "Autor", layout: "BLANK"}];
+    subData = presentation.subreddit;
+    slideData = presentation.slides ? presentation.slides : [{title: "Titel", content: {text: "Body Text"}, author: "Autor", layout: "BLANK"}];
 
     fs.readFile('src/auth/google/client_secret.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
@@ -44,13 +46,15 @@ function buildSlides(auth) {
         if (err) {
             console.log(err);
         }
+        console.log('präsi', presentation.data.slides[0].slideProperties);
         generateSlides(presentation.data.presentationId);
         console.log(`Created Presentation: https://docs.google.com/presentation/d/${presentation.data.presentationId}`);
     });
 
     //build the slides
-    
-    let request = slideConverter.build(slideData);
+
+    let request = [];
+    request = request.concat(slideConverter.buildTitlePage(subData)).concat(slideConverter.build(slideData));
 
     function generateSlides(presentationId) {
         slides.presentations.batchUpdate({
