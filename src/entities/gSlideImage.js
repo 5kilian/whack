@@ -5,7 +5,7 @@ module.exports = class gSlideImage {
     /**
      * construct a new Google Slide Image
      */
-    constructor(height, width, xPos, yPos, imgUrl, pageId) {
+    constructor(xPos, yPos, width, height, imgUrl, pageId) {
         this.height = height;
         this.width = width;
         this.xPos = xPos;
