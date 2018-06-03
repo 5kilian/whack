@@ -27,6 +27,7 @@
     "googleapis": "^27.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-scripts": "^1.1.4",
     "request": "^2.87.0"
   }
 }
