@@ -62,7 +62,7 @@ module.exports = class Reddit {
         return new Promise((resolve, reject) => {
             request(reddit + '/r/random/about.json', (error, response, suby) => {
                 Array.apply(null, { length: 20 }).map(Number.call, () => {
-                    return new Promise((resolve) => request(reddit + '/r/random.json', (error, response, body) => {
+                    return new Promise((resolve) => request(reddit + '/r/random/top.json', (error, response, body) => {
                         resolve(this.createSlide(JSON.parse(body).data.children[ 0 ].data));
                     })).then(slide => {
                         presentation.subreddit = JSON.parse(suby);
