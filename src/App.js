@@ -11,6 +11,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             autocompletions: [],
+            slidestext: 'no',
             slides: [],
             url: '',
             loaded: false,
@@ -31,9 +32,9 @@ class App extends React.Component {
     }
 
     selectSubreddit (subreddit) {
-        this.setState({ loaded: false });
+        this.setState({ loaded: false, slidestext: 'loading' });
         request('http://localhost:3000/reddit/r/' + subreddit, (error, response, url) => {
-            this.setState({ url: url, loaded: true })
+            this.setState({ url: url, loaded: true, slidestext: subreddit })
         });
     }
 
@@ -60,8 +61,9 @@ class App extends React.Component {
                     })}
                 </div>
 
-                
-                <a id="slide-link" className="btn btn-primary" href="{this.state.url}">Slides</a>
+                <a id="slide-link" className={"btn btn-primary" + (this.state.loaded ? '' : ' disabled')} href={this.state.url}>
+                    { this.state.slidestext } Slides
+                </a>
             </div>
         );
     }
