@@ -65,12 +65,6 @@ module.exports = class Reddit {
                     slide.content.img = slide.content.img[0];
                 }
 
-                if (slide.content.text && slide.content.img) {
-                    slide.layout = 'TITLE_AND_TWO_COLUMNS';
-                } else {
-                    slide.layout = 'TITLE_AND_BODY';
-                }
-
                 slide.author.name = child.author;
                 resolve(slide);
             })

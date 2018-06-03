@@ -42,14 +42,13 @@ function buildSlides(auth) {
         if (err) {
             console.log(err);
         }
-        console.log(`https://docs.google.com/presentation/d/${presentation.data.presentationId}`);
         generateSlides(presentation.data.presentationId);
+        console.log(`Created Presentation: https://docs.google.com/presentation/d/${presentation.data.presentationId}`);
     });
 
     //build the slides
     
     let request = slideConverter.build(slideData);
-    console.log(request);
 
     function generateSlides(presentationId) {
         slides.presentations.batchUpdate({
@@ -59,10 +58,8 @@ function buildSlides(auth) {
             }
         }, function (err, createSlideResponse) {
             if (err) {
-                //console.log(err);
+                console.log(err);
             }
-            console.log(createSlideResponse);
-            console.log(`Created slide with ID: ${createSlideResponse.data.replies[0].createSlide.objectId}`);
         });
     }
 }

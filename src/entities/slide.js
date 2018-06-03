@@ -1,4 +1,7 @@
 
+/**
+ * Internal Class to represent slides
+ */
 module.exports = class Slide {
     constructor () {
         this.title = '';
@@ -9,11 +12,16 @@ module.exports = class Slide {
         this.author = {
             name: ''
         };
-        /**
-         * TITLE
-         * TITLE_AND_BODY
-         * TITLE_AND_TWO_COLUMNS
-         */
-        this.layout = '';
+        this.type = () => {
+            
+            if (this.content.text && this.content.img) {
+                return 'TEXT_IMAGE';
+            } else if (this.content.text) {
+                return 'TEXT';
+            } else if (this.content.img) {
+                return 'IMAGE';
+            }
+            return 'EMPTY';
+        }
     }
 };

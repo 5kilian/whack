@@ -1,12 +1,15 @@
+const gSlideImage = require("../entities/gSlideImage");
+const gSlideText = require("../entities/gSlideText");
+
 module.exports = {
     build: function (input) {
         let request = [];
 
         input.forEach((slide, i) => {
+            console.log(slide.type());
+
             const PAGE_ID = "p0000" + i;
             const TITLE_ID = PAGE_ID + "_title";
-            const CONTENT0_ID = PAGE_ID + "_c0";
-            const CONTENT1_ID = PAGE_ID + "_c1";
 
             //add page
             request = request.concat(
@@ -40,7 +43,7 @@ module.exports = {
                                     "scaleX": 1,
                                     "scaleY": 1,
                                     "translateX": 320,
-                                    "translateY": 200,
+                                    "translateY": 50,
                                     "unit": "PT"
                                 }
                             }
@@ -52,69 +55,29 @@ module.exports = {
                             "text": slide.title,
                             "insertionIndex": 0
                         }
-                    },
-                    //add content
-                    {
-                        "createShape": {
-                            "objectId": CONTENT0_ID,
-                            "shapeType": "TEXT_BOX",
-                            "elementProperties": {
-                                "pageObjectId": PAGE_ID,
-                                "size": {
-                                    "width": {
-                                        "magnitude": 150,
-                                        "unit": "PT"
-                                    },
-                                    "height": {
-                                        "magnitude": 50,
-                                        "unit": "PT"
-                                    }
-                                },
-                                "transform": {
-                                    "scaleX": 1,
-                                    "scaleY": 1,
-                                    "translateX": 200,
-                                    "translateY": 100,
-                                    "unit": "PT"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "insertText": {
-                            "objectId": CONTENT0_ID,
-                            "text": slide.content.text,
-                            "insertionIndex": 0
-                        }
-                    },
-                    //add Image
-                    {
-                        "createImage": {
-                            "url": 'https://i.redd.it/kw5tz09mem111.gif',
-                            "elementProperties": {
-                                "pageObjectId": PAGE_ID,
-                                "size": {
-                                    "width": {
-                                        "magnitude": 30,
-                                        "unit": "PT"
-                                    },
-                                    "height": {
-                                        "magnitude": 30,
-                                        "unit": "PT"
-                                    }
-                                },
-                                "transform": {
-                                    "scaleX": 1,
-                                    "scaleY": 1,
-                                    "translateX": 200,
-                                    "translateY": 100,
-                                    "unit": "PT"
-                                }
-                            }
-                        }
                     }
-                ]);
+                ]
+            );
+            switch (slide.type()) {
+                case "TEXT":
+                    console.log(new gSlideText(100, 100, 200, 100, slide.content.text, PAGE_ID).getObject())
+                    request = request.concat(new gSlideText(100, 100, 200, 100, slide.content.text, PAGE_ID).getObject());
+                    break;
+                    case "IMAGE":
+                    console.log(new gSlideImage(100, 100, 200, 100, slide.content.img, PAGE_ID).getObject())
+                    request = request.concat(new gSlideImage(50, 150, 100, 100, slide.content.img, PAGE_ID).getObject());
+                    break;
+                case "TEXT_IMAGE":
+                    request.concat(new gSlideImage(100, 100, 300, 100, slide.content.text, PAGE_ID).getObject());
+                    request = request.concat(new gSlideText(50, 150, 100, 100, slide.content.img, PAGE_ID).getObject());
+                    break;
+                case "EMPTY":
+                default:
+            }
         });
+        
+        var fs = require('fs');
+        fs.writeFile('myjsonfile.json', request, 'utf8', null);
         return request;
     }
 }
