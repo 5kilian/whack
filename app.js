@@ -27,36 +27,38 @@ app.get('/reddit/auth', function (req, res) {
 
 app.get('/reddit/r/:sub' , function (req, res) {
     reddit.subreddit(req.params.sub).then(presentation => {
-        presentation.slides[21].content.img = '';
-        slidesService.newPresentation(presentation);
-        res.send(presentation);
+        slidesService.newPresentation(presentation).then((url) => {
+            res.send(url);
+        });
     });
 });
 
 app.get('/reddit/r/:sub/top' , function (req, res) {
-    reddit.subreddit(req.params.sub + '/top').then(slides => {
-        res.send(slidesService.newPresentation(slides));
+    reddit.subreddit(req.params.sub).then(presentation => {
+        slidesService.newPresentation(presentation).then((url) => {
+            res.send(url);
+        });
     });
 });
 
 app.get('/reddit/r/:sub/hot' , function (req, res) {
-    reddit.subreddit(req.params.sub + '/hot').then(slides => {
-        res.send(slidesService.newPresentation(slides));
+    reddit.subreddit(req.params.sub).then(presentation => {
+        slidesService.newPresentation(presentation).then((url) => {
+            res.send(url);
+        });
     });
 });
 
 app.get('/reddit/random' , function (req, res) {
-    reddit.random().then(slides => {
-        res.send(slidesService.newPresentation(slides));
+    reddit.subreddit(req.params.sub).then(presentation => {
+        slidesService.newPresentation(presentation).then((url) => {
+            res.send(url);
+        });
     });
 });
 
 app.get('/reddit/autocomplete', function (req, res) {
     res.send(reddit.autocomplete(req.query.q).then(completions => console.log(completions)));
-});
-
-app.get('/slides/', function (req, res) {
-    res.send(slidesService.newPresentation())
 });
 
 app.get('/person/', function (req, res) {
