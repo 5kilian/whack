@@ -12,8 +12,7 @@ module.exports = class Slide {
         this.author = {
             name: ''
         };
-        this.type = () => {
-            
+        this.type = () => {            
             if (this.content.text && this.content.img) {
                 return 'TEXT_IMAGE';
             } else if (this.content.text) {

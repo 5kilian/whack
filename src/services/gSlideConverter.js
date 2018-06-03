@@ -1,9 +1,11 @@
 const gSlideImage = require("../entities/gSlideImage");
 const gSlideText = require("../entities/gSlideText");
+const randomUser = require("../services/randomUserSlide")
+const randomUserGen = require("../services/createRandomPerson")
 
 module.exports = {
     build: function (input) {
-        let request = [];
+        let request = new randomUser(new randomUserGen().getPerson).getObject();
 
         input.forEach((slide, i) => {
             console.log(slide.type());
@@ -90,9 +92,10 @@ module.exports = {
                             "fields": "alignment"
                         }
                     }
+                   //updateTextStyle
                 ]
             );
-            switch (slide.type()) {
+            switch (slide.type()){
                 case "TEXT":
                     request = request.concat(new gSlideText(70, 100, 590, 250, slide.content.text, PAGE_ID).getObject());
                     break;

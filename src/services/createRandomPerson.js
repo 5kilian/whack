@@ -2,8 +2,9 @@
 const request = require('request');
 const Person = require('../entities/Person');
 
-module.exports = {
-    get: function () {
+module.exports = class randomPerson {
+     
+    getPerson() {
 
         let randomPerson = new Person();
         
@@ -24,4 +25,4 @@ module.exports = {
           
         return randomPerson;
     }
-};
+}
