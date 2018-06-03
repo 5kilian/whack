@@ -42,7 +42,15 @@ module.exports = class Reddit {
         });
     }
     random () {
-        return this.subreddit('random');
+        return new Promise((resolve, reject) => {
+            resolve(Promise.all(Array.apply(null, {length: 15}).map(Number.call, () => {
+                return new Promise((resolve, reject) =>
+                    request(reddit + '/r/random.json', (error, response, body) => {
+                        resolve(this.createSlide(JSON.parse(body).data.children[0].data));
+                    })
+                );
+            })));
+        });
     }
     autocomplete (query) {
         return new Promise((resolve, reject) => {

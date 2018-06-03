@@ -46,6 +46,13 @@ app.get('/reddit/r/:sub/hot' , function (req, res) {
     });
 });
 
+app.get('/reddit/random' , function (req, res) {
+    reddit.random().then(slides => {
+        slidesService.newPresentation(slides);
+        res.send(slides);
+    });
+});
+
 app.get('/reddit/autocomplete', function (req, res) {
     res.send(reddit.autocomplete(req.query.q).then(completions => console.log(completions)));
 });
