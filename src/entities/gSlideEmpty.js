@@ -6,21 +6,21 @@
  * use this.content_id to refer to the ID
  * 
  */
-module.exports = class gSlideText {
+module.exports = class gSlideEmpty {
 
     /**
     * @param {number} xPos 
     * @param {number} yPos 
     * @param {number} width 
     * @param {number} height 
-    * @param {string} text 
+    * @param {string} comment 
     */
-    constructor(xPos, yPos, width, height, text, pageId) {
+    constructor(xPos, yPos, width, height, comments, pageId) {
         this.height = height;
         this.width = width;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.text = text;
+        this.comments = " " + comments[0];
         this.content_id = "TEXT" + Math.random().toString(36).slice(2);
         this.pageId = pageId;
     }
@@ -57,7 +57,7 @@ module.exports = class gSlideText {
         }, {
             "insertText": {
                 "objectId": this.content_id,
-                "text": this.text,
+                "text": this.comments,
                 "insertionIndex": 0
             }
         },

@@ -7,7 +7,8 @@ module.exports = class Slide {
         this.title = '';
         this.content = {
             img: '',
-            text: ''
+            text: '',
+            comments: []
         };
         this.author = {
             name: ''

@@ -1,5 +1,6 @@
 const gSlideImage = require("../entities/gSlideImage");
 const gSlideText = require("../entities/gSlideText");
+const gSlideEmpty = require("../entities/gSlideEmpty");
 const randomUser = require("../services/randomUserSlide");
 const randomUserGen = require("../services/createRandomPerson");
 
@@ -7,8 +8,7 @@ module.exports = {
     img: 0,
     buildTitlePage: function (subreddit, person) {
         this.img = parseInt(Math.floor(Math.random() * 5));
-        let titlePage = [
-            {
+        let titlePage = [{
                 "createShape": {
                     "objectId": 'p_title',
                     "shapeType": "TEXT_BOX",
@@ -138,10 +138,10 @@ module.exports = {
                     "objectId": 'l_shape_1',
                     "applyMode": "RELATIVE",
                     "transform": {
-                        "scaleX":  Math.cos(180 * (Math.PI/180)),
-                        "scaleY":  Math.cos(180 * (Math.PI/180)),
-                        "shearX":  Math.sin(180 * (Math.PI/180)),
-                        "shearY": -Math.sin(180 * (Math.PI/180)),
+                        "scaleX": Math.cos(180 * (Math.PI / 180)),
+                        "scaleY": Math.cos(180 * (Math.PI / 180)),
+                        "shearX": Math.sin(180 * (Math.PI / 180)),
+                        "shearY": -Math.sin(180 * (Math.PI / 180)),
                         "unit": "EMU"
                     }
                 }
@@ -173,8 +173,7 @@ module.exports = {
                 }
             }
         ];
-        titlePage = titlePage.concat([
-            {
+        titlePage = titlePage.concat([{
                 "createShape": {
                     "objectId": 'p' + person.id,
                     "shapeType": "TEXT_BOX",
@@ -257,8 +256,7 @@ module.exports = {
 
             //add page
             request = request.concat(
-                [
-                    {
+                [{
                         createSlide: {
                             objectId: PAGE_ID,
                             slideLayoutReference: {
@@ -334,7 +332,7 @@ module.exports = {
                             "fields": "alignment"
                         }
                     }
-                   //updateTextStyle
+                    //updateTextStyle
                     ,
                     {
                         "createShape": {
@@ -408,10 +406,10 @@ module.exports = {
                             "objectId": PAGE_ID + 'l_shape_1',
                             "applyMode": "RELATIVE",
                             "transform": {
-                                "scaleX":  Math.cos(180 * (Math.PI/180)),
-                                "scaleY":  Math.cos(180 * (Math.PI/180)),
-                                "shearX":  Math.sin(180 * (Math.PI/180)),
-                                "shearY": -Math.sin(180 * (Math.PI/180)),
+                                "scaleX": Math.cos(180 * (Math.PI / 180)),
+                                "scaleY": Math.cos(180 * (Math.PI / 180)),
+                                "shearX": Math.sin(180 * (Math.PI / 180)),
+                                "shearY": -Math.sin(180 * (Math.PI / 180)),
                                 "unit": "EMU"
                             }
                         }
@@ -435,10 +433,11 @@ module.exports = {
                             "pageProperties": {
                                 "pageBackgroundFill": {
                                     "stretchedPictureFill": {
-                                        "contentUrl":
-                                            (i % Math.floor(Math.random() * 5) === 0) ?
-                                                "https://raw.githubusercontent.com/5kilian/whack/master/resources/bg-norman.png" :
-                                        "https://raw.githubusercontent.com/5kilian/whack/master/resources/bg" + this.img + ".png"
+                                        "contentUrl": 
+                                            ((i % Math.floor(Math.random() * 5) === 0) ? "https://raw.githubusercontent.com/5kilian/whack/master/resources/random" + (Math.floor(Math.random() * 6) + 1) + ".jpg"
+                                            : "https://raw.githubusercontent.com/5kilian/whack/master/resources/bg" + this.img + ".png"
+                                            )
+                                        
                                     }
                                 }
                             },
@@ -449,8 +448,7 @@ module.exports = {
             );
 
 
-            request = request.concat([
-                {
+            request = request.concat([{
                     "createShape": {
                         "objectId": PAGE_ID + person.id,
                         "shapeType": "TEXT_BOX",
@@ -512,7 +510,7 @@ module.exports = {
 
             request = request.concat(new gSlideImage(620, 300, 100, 100, person.photo, PAGE_ID).getObject());
 
-            switch (slide.type()){
+            switch (slide.type()) {
                 case "TEXT":
                     request = request.concat(new gSlideText(70, 100, 590, 250, slide.content.text, PAGE_ID).getObject());
                     break;
@@ -524,6 +522,7 @@ module.exports = {
                     request = request.concat(new gSlideText(300, 150, 100, 150, slide.content.img, PAGE_ID).getObject());
                     break;
                 case "EMPTY":
+                    request = request.concat(new gSlideEmpty(70, 100, 590, 250, slide.content.comments, PAGE_ID).getObject());
                 default:
             }
         });
