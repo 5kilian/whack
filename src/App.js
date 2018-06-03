@@ -38,25 +38,30 @@ class App extends React.Component {
     render () {
         return (
             <div className="app container d-flex flex-column">
-                <div>
+                <div id="title-container">
                     <h1 className="title">
                         Whakaoke
                     </h1>
                 </div>
+
                 <div className="d-flex flex-row align-self-center searchbar">
                     <input id="whack-input" className="form-control flex-grow-1 m-2" onChange={this.handleInput.bind(this)}/>
                     <button className="btn btn-primary m-2" onClick={this.selectRandom.bind(this)}>
                         Random
                     </button>
                 </div>
-                {this.state.autocompletions.map((completion, i) => {
-                    return (<div key={i} onClick={() => this.selectSubreddit(completion.display_name_prefixed.split('/')[1])}>
-                        {completion.title}
-                    </div>);
-                })}
+                <div id="autocomplete-results">
+                    {this.state.autocompletions.map((completion, i) => {
+                        return (<div key={i} onClick={() => this.selectSubreddit(completion.display_name_prefixed.split('/')[1])}>
+                            {completion.title}
+                        </div>);
+                    })}
+                </div>
 
-                {this.state.url}
-                <div><a href="https://docs.google.com/presentation/d/1eTOVC1HKuFOymot4dsFrQQUhgGbB_HGnvV_7fBiV984">Slides</a></div>
+                
+                <div>
+                    <a href="{this.state.url}">Slides</a>
+                </div>
             </div>
         );
     }
