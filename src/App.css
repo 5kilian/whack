@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
 html, body, #root {
     height: 100%;
 }
@@ -13,6 +15,7 @@ html, body, #root {
 .title {
     text-align: center;
     font-size: 64px;
+    font-family: 'Lobster', cursive;
 }
 
 .searchbar {
@@ -34,7 +37,7 @@ html, body, #root {
 
 #autocomplete-results {
     width: 90%;
-    margin: 30px auto;
+    margin: 15px auto 30px;
 }
 
 #autocomplete-results > div {
@@ -49,4 +52,11 @@ html, body, #root {
 
 #slide-link {
     margin: 0 auto;
+}
+
+footer {
+    margin-top: auto;
+    width: 100%;
+    color:#ccc;
+    text-align: center;
 }

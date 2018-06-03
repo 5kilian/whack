@@ -64,6 +64,11 @@ class App extends React.Component {
                 <a id="slide-link" className={"btn btn-primary" + (this.state.loaded ? '' : ' disabled')} href={this.state.url}>
                     { this.state.slidestext } Slides
                 </a>
+
+                <footer>
+                    <hr />
+                    <p>Made by the Garbage Collectors</p>
+                </footer>
             </div>
         );
     }
