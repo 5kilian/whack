@@ -1,10 +1,10 @@
 module.exports = class Person {
 
     constructor () {
+        this.id = 0;
         this.forename = '';
         this.surname = '';
-        this.city = '';
-        this.username = '';
+        this.email = '';
         this.photo = '';
     }
 };

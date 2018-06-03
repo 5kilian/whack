@@ -27,7 +27,7 @@ module.exports = function authorize(credentials, callback) {
         oAuth2Client.setCredentials(JSON.parse(token));
         callback(oAuth2Client);
     });
-}
+};
 
 /**
  * Get and store new token after prompting for user authorization, and then

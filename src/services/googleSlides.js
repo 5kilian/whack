@@ -3,6 +3,7 @@ const { google } = require('googleapis');
 const fs = require('fs');
 const readline = require('readline');
 const slideConverter = require('./gSlideConverter');
+const RandomPerson = require("../services/createRandomPerson");
 
 let subData = {};
 let slideData = [];
@@ -15,6 +16,9 @@ module.exports = {
         init(presentation);
         return "Slides created.";
     },
+    download: function (presentation) {
+
+    }
 };
 
 // Load client secrets from a local file.
@@ -33,39 +37,36 @@ function init(presentation) {
 }
 
 function buildSlides(auth) {
-    
-    const slides = google.slides({
-        version: 'v1',
-        auth
-    });
+    const slides = google.slides({ version: 'v1', auth });
 
     //create a new presentation
-    slides.presentations.create({
-        title: "" + Date.now()
-    }, (err, presentation) => {
-        if (err) {
-            console.log(err);
-        }
-        console.log('präsi', presentation.data.slides[0].slideProperties);
-        generateSlides(presentation.data.presentationId);
-        console.log(`Created Presentation: https://docs.google.com/presentation/d/${presentation.data.presentationId}`);
-    });
+    new RandomPerson().get().then(person => {
+        let request = [];
+        request = request.concat(slideConverter.buildTitlePage(subData, person)).concat(slideConverter.build(slideData, person));
 
-    //build the slides
-
-    let request = [];
-    request = request.concat(slideConverter.buildTitlePage(subData)).concat(slideConverter.build(slideData));
-
-    function generateSlides(presentationId) {
-        slides.presentations.batchUpdate({
-            presentationId: presentationId,
-            resource: {
-                requests: request
-            }
-        }, function (err, createSlideResponse) {
+        slides.presentations.create({
+            title: "" + Date.now()
+        }, (err, presentation) => {
             if (err) {
                 console.log(err);
             }
+            generateSlides(presentation.data.presentationId);
+            console.log(`Created Presentation: https://docs.google.com/presentation/d/${presentation.data.presentationId}`);
         });
-    }
+
+        //build the slides
+        function generateSlides(presentationId) {
+            slides.presentations.batchUpdate({
+                presentationId: presentationId,
+                resource: {
+                    requests: request
+                }
+            }, function (err, createSlideResponse) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+
 }

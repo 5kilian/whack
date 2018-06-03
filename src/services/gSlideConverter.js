@@ -1,12 +1,12 @@
 const gSlideImage = require("../entities/gSlideImage");
 const gSlideText = require("../entities/gSlideText");
-const randomUser = require("../services/randomUserSlide")
-const randomUserGen = require("../services/createRandomPerson")
+const randomUser = require("../services/randomUserSlide");
+const randomUserGen = require("../services/createRandomPerson");
 
 module.exports = {
     img: 0,
-    buildTitlePage: function (subreddit) {
-        this.img = Math.floor(Math.random() * 3);
+    buildTitlePage: function (subreddit, person) {
+        this.img = parseInt(Math.floor(Math.random() * 5));
         let titlePage = [
             {
                 "createShape": {
@@ -48,7 +48,7 @@ module.exports = {
                         type: 'ALL'
                     },
                     style: {
-                        fontFamily: 'Georgia',
+                        fontFamily: 'Roboto',
                         fontSize: {
                             magnitude: 70,
                             unit: 'PT'
@@ -173,18 +173,80 @@ module.exports = {
                 }
             }
         ];
+        titlePage = titlePage.concat([
+            {
+                "createShape": {
+                    "objectId": 'p' + person.id,
+                    "shapeType": "TEXT_BOX",
+                    "elementProperties": {
+                        "pageObjectId": 'p',
+                        "size": {
+                            "width": {
+                                "magnitude": 590,
+                                "unit": "PT"
+                            },
+                            "height": {
+                                "magnitude": 50,
+                                "unit": "PT"
+                            }
+                        },
+                        "transform": {
+                            "scaleX": 1,
+                            "scaleY": 1,
+                            "translateX": 325,
+                            "translateY": 370,
+                            "unit": "PT"
+                        }
+                    }
+                }
+            },
+            {
+                "insertText": {
+                    "objectId": 'p' + person.id,
+                    "text": person.forename + ' ' + person.surname + '    ' + person.email,
+                    "insertionIndex": 0
+                }
+            },
+            {
+                updateTextStyle: {
+                    objectId: 'p' + person.id,
+                    textRange: {
+                        type: 'ALL'
+                    },
+                    style: {
+                        fontFamily: 'Roboto',
+                        fontSize: {
+                            magnitude: 13,
+                            unit: 'PT'
+                        },
+                        foregroundColor: {
+                            opaqueColor: {
+                                rgbColor: {
+                                    blue: 0.5,
+                                    green: 0.5,
+                                    red: 0.5
+                                }
+                            }
+                        }
+                    },
+                    fields: 'foregroundColor,fontFamily,fontSize'
+                }
+            }
+        ]);
+
+        titlePage = titlePage.concat(new gSlideImage(620, 300, 100, 100, person.photo, 'p').getObject());
 
 
         if (subreddit.data.banner_img) {
-            titlePage = titlePage.concat(new gSlideImage(50, 200, 300, 300, subreddit.data.banner_img, 'p').getObject())
+            titlePage = titlePage.concat(new gSlideImage(200, 200, 150, 150, subreddit.data.banner_img, 'p').getObject())
         }
         if (subreddit.data.icon_img) {
-            titlePage = titlePage.concat(new gSlideImage(50, 200, 300, 300, subreddit.data.icon_img, 'p').getObject())
+            titlePage = titlePage.concat(new gSlideImage(50, 200, 150, 150, subreddit.data.icon_img, 'p').getObject())
         }
 
         return titlePage;
     },
-    build: function (input) {
+    build: function (input, person) {
         let request = []; // new randomUser(new randomUserGen().getPerson).getObject();
 
         input.forEach((slide, i) => {
@@ -245,7 +307,7 @@ module.exports = {
                                 type: 'ALL'
                             },
                             style: {
-                                fontFamily: 'Georgia',
+                                fontFamily: 'Roboto',
                                 fontSize: {
                                     magnitude: 30,
                                     unit: 'PT'
@@ -373,7 +435,10 @@ module.exports = {
                             "pageProperties": {
                                 "pageBackgroundFill": {
                                     "stretchedPictureFill": {
-                                        "contentUrl": "https://raw.githubusercontent.com/5kilian/whack/master/resources/bg" + this.img + ".png"
+                                        "contentUrl":
+                                            (i % Math.floor(Math.random() * 5) === 0) ?
+                                                "https://raw.githubusercontent.com/5kilian/whack/master/resources/bg-norman.png" :
+                                        "https://raw.githubusercontent.com/5kilian/whack/master/resources/bg" + this.img + ".png"
                                     }
                                 }
                             },
@@ -382,6 +447,71 @@ module.exports = {
                     }
                 ]
             );
+
+
+            request = request.concat([
+                {
+                    "createShape": {
+                        "objectId": PAGE_ID + person.id,
+                        "shapeType": "TEXT_BOX",
+                        "elementProperties": {
+                            "pageObjectId": PAGE_ID,
+                            "size": {
+                                "width": {
+                                    "magnitude": 590,
+                                    "unit": "PT"
+                                },
+                                "height": {
+                                    "magnitude": 50,
+                                    "unit": "PT"
+                                }
+                            },
+                            "transform": {
+                                "scaleX": 1,
+                                "scaleY": 1,
+                                "translateX": 325,
+                                "translateY": 370,
+                                "unit": "PT"
+                            }
+                        }
+                    }
+                },
+                {
+                    "insertText": {
+                        "objectId": PAGE_ID + person.id,
+                        "text": person.forename + ' ' + person.surname + '    ' + person.email,
+                        "insertionIndex": 0
+                    }
+                },
+                {
+                    updateTextStyle: {
+                        objectId: PAGE_ID + person.id,
+                        textRange: {
+                            type: 'ALL'
+                        },
+                        style: {
+                            fontFamily: 'Roboto',
+                            fontSize: {
+                                magnitude: 13,
+                                unit: 'PT'
+                            },
+                            foregroundColor: {
+                                opaqueColor: {
+                                    rgbColor: {
+                                        blue: 0.5,
+                                        green: 0.5,
+                                        red: 0.5
+                                    }
+                                }
+                            }
+                        },
+                        fields: 'foregroundColor,fontFamily,fontSize'
+                    }
+                }
+            ]);
+
+            request = request.concat(new gSlideImage(620, 300, 100, 100, person.photo, PAGE_ID).getObject());
+
             switch (slide.type()){
                 case "TEXT":
                     request = request.concat(new gSlideText(70, 100, 590, 250, slide.content.text, PAGE_ID).getObject());
