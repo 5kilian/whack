@@ -31,7 +31,7 @@ module.exports = {
                                 "pageObjectId": PAGE_ID,
                                 "size": {
                                     "width": {
-                                        "magnitude": 150,
+                                        "magnitude": 590,
                                         "unit": "PT"
                                     },
                                     "height": {
@@ -42,8 +42,8 @@ module.exports = {
                                 "transform": {
                                     "scaleX": 1,
                                     "scaleY": 1,
-                                    "translateX": 320,
-                                    "translateY": 50,
+                                    "translateX": 70,
+                                    "translateY": 25,
                                     "unit": "PT"
                                 }
                             }
@@ -55,29 +55,61 @@ module.exports = {
                             "text": slide.title,
                             "insertionIndex": 0
                         }
+                    },
+                    {
+                        updateTextStyle: {
+                            objectId: TITLE_ID,
+                            textRange: {
+                                type: 'ALL'
+                            },
+                            style: {
+                                fontFamily: 'Comic Sans MS',
+                                fontSize: {
+                                    magnitude: 30,
+                                    unit: 'PT'
+                                },
+                                foregroundColor: {
+                                    opaqueColor: {
+                                        rgbColor: {
+                                            blue: 1.0,
+                                            green: 0.0,
+                                            red: 0.0
+                                        }
+                                    }
+                                }
+                            },
+                            fields: 'foregroundColor,fontFamily,fontSize'
+                        }
+                    },
+                    {
+                        updateParagraphStyle: {
+                            "objectId": TITLE_ID,
+                            "style": {
+                                "alignment": 'CENTER'
+                            },
+                            "fields": "alignment"
+                        }
                     }
                 ]
             );
             switch (slide.type()) {
                 case "TEXT":
-                    console.log(new gSlideText(100, 100, 200, 100, slide.content.text, PAGE_ID).getObject())
-                    request = request.concat(new gSlideText(100, 100, 200, 100, slide.content.text, PAGE_ID).getObject());
+                    request = request.concat(new gSlideText(70, 100, 590, 250, slide.content.text, PAGE_ID).getObject());
                     break;
-                    case "IMAGE":
-                    console.log(new gSlideImage(100, 100, 200, 100, slide.content.img, PAGE_ID).getObject())
-                    request = request.concat(new gSlideImage(50, 150, 100, 100, slide.content.img, PAGE_ID).getObject());
+                case "IMAGE":
+                    request = request.concat(new gSlideImage(70, 100, 590, 250, slide.content.img, PAGE_ID).getObject());
                     break;
                 case "TEXT_IMAGE":
-                    request.concat(new gSlideImage(100, 100, 300, 100, slide.content.text, PAGE_ID).getObject());
-                    request = request.concat(new gSlideText(50, 150, 100, 100, slide.content.img, PAGE_ID).getObject());
+                    request = request.concat(new gSlideImage(300, 150, 100, 150, slide.content.text, PAGE_ID).getObject());
+                    request = request.concat(new gSlideText(300, 150, 100, 150, slide.content.img, PAGE_ID).getObject());
                     break;
                 case "EMPTY":
                 default:
             }
         });
-        
-        var fs = require('fs');
-        fs.writeFile('myjsonfile.json', request, 'utf8', null);
+
+        //var fs = require('fs');
+        //fs.writeFile('myjsonfile.json', request, 'utf8', null);
         return request;
     }
 }

@@ -7,13 +7,13 @@
 module.exports = class gSlideText {
 
     /**
-     * @param {number} height 
-     * @param {number} width 
-     * @param {number} xPos 
-     * @param {number} yPos 
-     * @param {string} text 
-     */
-    constructor(height, width, xPos, yPos, text, pageId) {
+    * @param {number} xPos 
+    * @param {number} yPos 
+    * @param {number} width 
+    * @param {number} height 
+    * @param {string} text 
+    */
+    constructor(xPos, yPos, width, height, text, pageId) {
         this.height = height;
         this.width = width;
         this.xPos = xPos;
