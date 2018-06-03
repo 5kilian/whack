@@ -50,7 +50,7 @@ app.get('/reddit/r/:sub/hot' , function (req, res) {
 });
 
 app.get('/reddit/random' , function (req, res) {
-    reddit.subreddit(req.params.sub).then(presentation => {
+    reddit.random().then(presentation => {
         slidesService.newPresentation(presentation).then((url) => {
             res.send(url);
         });
