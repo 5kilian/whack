@@ -42,7 +42,7 @@ class App extends React.Component {
             <div className="app container d-flex flex-column">
                 <div id="title-container">
                     <h1 className="title">
-                        Whakaoke
+                        Whakaokee!
                     </h1>
                 </div>
 
@@ -61,9 +61,7 @@ class App extends React.Component {
                 </div>
 
                 
-                <div>
-                    <a href="{this.state.url}">Slides</a>
-                </div>
+                <a id="slide-link" className="btn btn-primary" href="{this.state.url}">Slides</a>
             </div>
         );
     }

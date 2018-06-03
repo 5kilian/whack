@@ -12,4 +12,25 @@ html, body, #root {
 
 .title {
     text-align: center;
+    font-size: 64px;
+}
+
+.searchbar {
+    width: 90%;
+}
+
+#autocomplete-results {
+    width: 90%;
+    margin: 30px auto;
+}
+
+#autocomplete-results > div {
+    margin: 10px;
+    padding: 15px;
+    background: #ccc;
+    font-weight: bold;
+}
+
+#slide-link {
+    margin: 0 auto;
 }
