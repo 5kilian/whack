@@ -11,8 +11,10 @@ const app = express();
 const reddit = new Reddit();
 
 // respond with "hello world" when a GET request is made to the homepage
-app.get('/', function (req, res) {
-
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
 });
 
 app.get('/reddit/', function (req, res) {
@@ -20,16 +22,34 @@ app.get('/reddit/', function (req, res) {
 });
 
 app.get('/reddit/auth', function (req, res) {
-    res.send(reddit.auth());
+    reddit.auth().then(result => res.send(result));
 });
 
 app.get('/reddit/r/:sub' , function (req, res) {
-    res.send(reddit.subreddit(req.params.sub).then(slides => console.log(slides)));
+    reddit.subreddit(req.params.sub).then(slides => {
+        slidesService.newPresentation(slides);
+        res.send(slides);
+    });
+});
+
+app.get('/reddit/r/:sub/top' , function (req, res) {
+    reddit.subreddit(req.params.sub + '/top').then(slides => {
+        slidesService.newPresentation(slides);
+        res.send(slides);
+    });
+});
+
+app.get('/reddit/r/:sub/hot' , function (req, res) {
+    reddit.subreddit(req.params.sub + '/hot').then(slides => {
+        slidesService.newPresentation(slides);
+        res.send(slides);
+    });
 });
 
 app.get('/reddit/random' , function (req, res) {
-    reddit.subreddit('random').then(slides => {
-        res.send(slidesService.newPresentation(slides));
+    reddit.random().then(slides => {
+        slidesService.newPresentation(slides);
+        res.send(slides);
     });
 });
 

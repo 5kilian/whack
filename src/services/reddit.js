@@ -8,7 +8,7 @@ const fs = require('fs');
 const Slide = require('../entities/slide');
 
 const reddit = 'https://www.reddit.com';
-const reddit_oauth = 'https://oauth.reddit.com';
+// const reddit_oauth = 'https://oauth.reddit.com';
 
 module.exports = class Reddit {
     get () {
@@ -39,6 +39,17 @@ module.exports = class Reddit {
             request(reddit + '/r/' + sub + '.json', (error, response, body) => {
                 resolve(Promise.all(JSON.parse(body).data.children.map(child => this.createSlide(child.data))));
             });
+        });
+    }
+    random () {
+        return new Promise((resolve, reject) => {
+            resolve(Promise.all(Array.apply(null, {length: 15}).map(Number.call, () => {
+                return new Promise((resolve, reject) =>
+                    request(reddit + '/r/random.json', (error, response, body) => {
+                        resolve(this.createSlide(JSON.parse(body).data.children[0].data));
+                    })
+                );
+            })));
         });
     }
     autocomplete (query) {
