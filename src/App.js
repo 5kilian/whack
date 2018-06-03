@@ -41,28 +41,29 @@ class App extends React.Component {
     render () {
         return (
             <div className="app container d-flex flex-column">
-                <div>
+                <div id="title-container">
                     <h1 className="title">
-                        Whakaoke
+                        Whakaokee!
                     </h1>
                 </div>
+
                 <div className="d-flex flex-row align-self-center searchbar">
                     <input id="whack-input" className="form-control flex-grow-1 m-2" onChange={this.handleInput.bind(this)}/>
                     <button className="btn btn-primary m-2" onClick={this.selectRandom.bind(this)}>
                         Random
                     </button>
                 </div>
-                {this.state.autocompletions.map((completion, i) => {
-                    return (<div key={i} onClick={() => this.selectSubreddit(completion.display_name_prefixed.split('/')[1])}>
-                        {completion.title}
-                    </div>);
-                })}
-
-                <div>
-                    <a className={"btn btn-primary" + (this.state.loaded ? '' : ' disabled')} href={this.state.url}>
-                        { this.state.slidestext } Slides
-                    </a>
+                <div id="autocomplete-results">
+                    {this.state.autocompletions.map((completion, i) => {
+                        return (<div key={i} onClick={() => this.selectSubreddit(completion.display_name_prefixed.split('/')[1])}>
+                            {completion.title}
+                        </div>);
+                    })}
                 </div>
+
+                <a id="slide-link" className={"btn btn-primary" + (this.state.loaded ? '' : ' disabled')} href={this.state.url}>
+                    { this.state.slidestext } Slides
+                </a>
             </div>
         );
     }
