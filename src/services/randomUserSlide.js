@@ -14,14 +14,21 @@ module.exports = class randomUserSlide {
      * @param {Person} generatedPerson 
      * @param {string} pageId 
      */
-    constructor(randomPerson, pageId) {
-        this.forname = randomPerson.forname;
-        this.surname = randomPerson.surname;
-        this.city = randomPerson.city;
-        this.username = randomPerson.username;
-        this.photo = randomPerson.photo;
-
-        this.pageId = "p0000";
+    constructor(randomPersonPromise) {
+        console.log('whackson',
+            randomPersonPromise
+        );
+        randomPersonPromise.then(person => {
+            this.forname = person.forname;
+            this.surname = person.surname;
+            this.city = person.city;
+            this.username = person.username;
+            this.photo = person.photo;
+    
+            this.pageId = "p0000";
+        })
+        
+        
     }
 
 
@@ -29,14 +36,7 @@ module.exports = class randomUserSlide {
      * get the google slide API compatible request objects
      */
     getObject() {
-        var randomPersSlide = [{
-            createSlide: {
-                objectId: this.pageId,
-                slideLayoutReference: {
-                    predefinedLayout: 'BLANK'
-                }
-            }
-        }];
+        var randomPersSlide = [ ];
 
         randomPersSlide = randomPersSlide.concat(
             new gSlideText(100,100, 200, 50,"Hey my Name is" + this.forname + this.surname, this.pageId));

@@ -5,7 +5,12 @@ const randomUserGen = require("../services/createRandomPerson")
 
 module.exports = {
     build: function (input) {
-        let request = new randomUser(new randomUserGen().getPerson).getObject();
+        let generator = new randomUserGen();
+        let person = generator.getPerson();
+
+        let request = [];
+        
+        
 
         input.forEach((slide, i) => {
             console.log(slide.type());
