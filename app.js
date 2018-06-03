@@ -27,29 +27,25 @@ app.get('/reddit/auth', function (req, res) {
 
 app.get('/reddit/r/:sub' , function (req, res) {
     reddit.subreddit(req.params.sub).then(slides => {
-        slidesService.newPresentation(slides);
-        res.send(slides);
+        res.send(slidesService.newPresentation(slides));
     });
 });
 
 app.get('/reddit/r/:sub/top' , function (req, res) {
     reddit.subreddit(req.params.sub + '/top').then(slides => {
-        slidesService.newPresentation(slides);
-        res.send(slides);
+        res.send(slidesService.newPresentation(slides));
     });
 });
 
 app.get('/reddit/r/:sub/hot' , function (req, res) {
     reddit.subreddit(req.params.sub + '/hot').then(slides => {
-        slidesService.newPresentation(slides);
-        res.send(slides);
+        res.send(slidesService.newPresentation(slides));
     });
 });
 
 app.get('/reddit/random' , function (req, res) {
     reddit.random().then(slides => {
-        slidesService.newPresentation(slides);
-        res.send(slides);
+        res.send(slidesService.newPresentation(slides));
     });
 });
 

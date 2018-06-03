@@ -63,7 +63,7 @@ module.exports = {
                                 type: 'ALL'
                             },
                             style: {
-                                fontFamily: 'Comic Sans MS',
+                                fontFamily: 'Georgia',
                                 fontSize: {
                                     magnitude: 30,
                                     unit: 'PT'
@@ -71,7 +71,7 @@ module.exports = {
                                 foregroundColor: {
                                     opaqueColor: {
                                         rgbColor: {
-                                            blue: 1.0,
+                                            blue: 0.0,
                                             green: 0.0,
                                             red: 0.0
                                         }

@@ -26,6 +26,8 @@ function init(slides) {
         // Authorize a client with credentials, then call the Google Slides API.
         authorize(JSON.parse(content), buildSlides);
     });
+
+    return "slides created.";
 }
 
 function buildSlides(auth) {

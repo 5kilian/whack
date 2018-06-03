@@ -58,6 +58,21 @@ module.exports = class gSlideText {
                 "text": this.text,
                 "insertionIndex": 0
             }
-        }];
+        },
+        {
+            updateTextStyle: {
+                objectId: this.content_id,
+                textRange: {
+                    type: 'ALL'
+                },
+                style: {
+                    fontSize: {
+                        magnitude: 20,
+                        unit: 'PT'
+                    }
+                },
+                fields: 'foregroundColor,fontFamily,fontSize'
+            }
+        },];
     }
 };
