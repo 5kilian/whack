@@ -4,7 +4,9 @@ const randomUser = require("../services/randomUserSlide")
 const randomUserGen = require("../services/createRandomPerson")
 
 module.exports = {
+    img: 0,
     buildTitlePage: function (subreddit) {
+        this.img = Math.floor(Math.random() * 3);
         let titlePage = [
             {
                 "createShape": {
@@ -163,7 +165,7 @@ module.exports = {
                     "pageProperties": {
                         "pageBackgroundFill": {
                             "stretchedPictureFill": {
-                                "contentUrl": "https://raw.githubusercontent.com/5kilian/whack/master/resources/fuchsia.jpg"
+                                "contentUrl": "https://raw.githubusercontent.com/5kilian/whack/master/resources/bg" + this.img + ".png"
                             }
                         }
                     },
@@ -174,14 +176,11 @@ module.exports = {
 
 
         if (subreddit.data.banner_img) {
-            titlePage.concat(new gSlideImage(50, 200, 300, 300, subreddit.data.banner_img, 'p').getObject())
+            titlePage = titlePage.concat(new gSlideImage(50, 200, 300, 300, subreddit.data.banner_img, 'p').getObject())
         }
         if (subreddit.data.icon_img) {
-            titlePage.concat(new gSlideImage(50, 200, 300, 300, subreddit.data.icon_img, 'p').getObject())
+            titlePage = titlePage.concat(new gSlideImage(50, 200, 300, 300, subreddit.data.icon_img, 'p').getObject())
         }
-
-
-
 
         return titlePage;
     },
@@ -368,6 +367,19 @@ module.exports = {
                             }
                         }
                     },
+                    {
+                        "updatePageProperties": {
+                            "objectId": PAGE_ID,
+                            "pageProperties": {
+                                "pageBackgroundFill": {
+                                    "stretchedPictureFill": {
+                                        "contentUrl": "https://raw.githubusercontent.com/5kilian/whack/master/resources/bg" + this.img + ".png"
+                                    }
+                                }
+                            },
+                            "fields": "pageBackgroundFill"
+                        }
+                    }
                 ]
             );
             switch (slide.type()){
