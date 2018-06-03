@@ -12,7 +12,8 @@ class App extends React.Component {
         this.state = {
             autocompletions: [],
             slides: [],
-            url: ''
+            url: '',
+            loaded: false,
         };
         this.reddit = new Reddit();
     }
@@ -30,8 +31,9 @@ class App extends React.Component {
     }
 
     selectSubreddit (subreddit) {
+        this.setState({ loaded: false });
         request('http://localhost:3000/reddit/r/' + subreddit, (error, response, url) => {
-            this.setState({ url: url })
+            this.setState({ url: url, loaded: true })
         });
     }
 
