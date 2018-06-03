@@ -11,7 +11,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             autocompletions: [],
-            slides: []
+            slides: [],
+            url: ''
         };
         this.reddit = new Reddit();
     }
@@ -29,8 +30,8 @@ class App extends React.Component {
     }
 
     selectSubreddit (subreddit) {
-        request('http://localhost:3000/reddit/r/' + subreddit, (error, response, slides) => {
-            this.setState({ slides: JSON.parse(slides) })
+        request('http://localhost:3000/reddit/r/' + subreddit, (error, response, url) => {
+            this.setState({ url: url })
         });
     }
 
@@ -53,14 +54,8 @@ class App extends React.Component {
                         {completion.title}
                     </div>);
                 })}
-                {this.state.slides.map((slides, i) => {
-                    return (<div key={i}>
-                        <pre>
-                            { JSON.stringify(slides, null, 2) }
-                        </pre>
-                    </div>);
-                })
-                }
+
+                {this.state.url}
                 <div><a href="https://docs.google.com/presentation/d/1eTOVC1HKuFOymot4dsFrQQUhgGbB_HGnvV_7fBiV984">Slides</a></div>
             </div>
         );

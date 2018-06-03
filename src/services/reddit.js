@@ -48,7 +48,9 @@ module.exports = class Reddit {
                     }).then(slides => {
                         presentation.subreddit = JSON.parse(suby);
                         presentation.slides = slides;
-                        resolve(presentation);
+                        setTimeout(() => {
+                            resolve(presentation);
+                        }, 500);
                     });
                 })
             });
@@ -65,7 +67,9 @@ module.exports = class Reddit {
                     })).then(slide => {
                         presentation.subreddit = JSON.parse(suby);
                         presentation.slides.push(slide);
-                        resolve(presentation);
+                        setTimeout(() => {
+                            resolve(presentation);
+                        }, 1500);
                     });
                 })
             })
