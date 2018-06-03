@@ -1,6 +1,8 @@
 import React from 'react';
 import Reddit from './services/reddit';
 
+import './App.css';
+
 import request from 'request';
 
 class App extends React.Component {
@@ -12,10 +14,6 @@ class App extends React.Component {
             slides: []
         };
         this.reddit = new Reddit();
-    }
-
-    componentDidMount () {
-
     }
 
     handleInput () {
@@ -38,11 +36,15 @@ class App extends React.Component {
 
     render () {
         return (
-            <div className="container">
-                Whackatoke
-                <div className="row">
-                    <input id="whack-input" className="form-control col-md-9" onChange={this.handleInput.bind(this)}/>
-                    <button className="btn btn-primary col-md-2 offset-md-1" onClick={this.selectRandom.bind(this)}>
+            <div className="app container d-flex flex-column">
+                <div>
+                    <h1 className="title">
+                        Whakaoke
+                    </h1>
+                </div>
+                <div className="d-flex flex-row align-self-center searchbar">
+                    <input id="whack-input" className="form-control flex-grow-1 m-2" onChange={this.handleInput.bind(this)}/>
+                    <button className="btn btn-primary m-2" onClick={this.selectRandom.bind(this)}>
                         Random
                     </button>
                 </div>
