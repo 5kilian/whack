@@ -20,4 +20,8 @@ You can use it as an application and as an api as well.
 
 ## Customization
 
-For customization you can replace the background images in the resources directory.
+For customization purpose you can replace the background images in the resources directory.
+
+## License
+
+MIT 
